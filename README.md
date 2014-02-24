@@ -1,7 +1,7 @@
 Hibernate
 =========
 
-Projeto em Java, com Hibernate.
+Projeto em Java, com Hibernate
 
 Programação V
 
