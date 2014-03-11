@@ -19,5 +19,6 @@
     <property name="hbm2ddl.auto">none</property>
     <!-- Mapping files -->
     <mapping class="persistence.entities.User"/>
+    <mapping class="persistence.entities.Role"/>
   </session-factory>
 </hibernate-configuration>

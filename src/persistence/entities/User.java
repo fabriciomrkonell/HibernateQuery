@@ -53,6 +53,25 @@ public class User implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+    
+    public void addRole(Role role) throws Exception {   
+        System.out.println("Criando usuários...");
+        RelacionamentoDAO dao = new RelacionamentoDAO();
+        Relacionamento admin = (Relacionamento) dao.getNewInstance();
+        admin.setRegra(role.getId()); 
+        admin.setUser(1); 
+        dao.create(admin);
+
+        System.out.print(" OK!");
+       /* RelacionamentoDAO dao = new RelacionamentoDAO();         
+        Relacionamento rel = (Relacionamento) dao.getNewInstance();
+        rel.setRegra(role.getId());
+        rel.setUser(this.getId());
+        System.out.println(rel.getRegra());
+        System.out.println(rel.getUser());
+        dao.create(rel);        
+        System.out.print(" OK!");       */
+    }        
 
     @Override
     public String toString() {
