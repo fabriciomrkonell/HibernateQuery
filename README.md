@@ -1,4 +1,4 @@
-Hibernate
+Hibernate - Query Nomeada
 =========
 
 Projeto em Java, com Hibernate, usando Query Nomeada
