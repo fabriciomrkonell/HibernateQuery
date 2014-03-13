@@ -20,5 +20,6 @@
     <!-- Mapping files -->
     <mapping class="persistence.entities.User"/>
     <mapping class="persistence.entities.Role"/>
+    <mapping class="persistence.entities.Relacionamento"/>
   </session-factory>
 </hibernate-configuration>

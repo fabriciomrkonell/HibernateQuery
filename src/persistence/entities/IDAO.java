@@ -25,7 +25,7 @@ public interface IDAO {
 
     List list(Integer firstResult, Integer maxResults) throws Exception;
 
-    void removeAll() throws Exception;
+    void removeAll() throws Exception;       
 
     void save(Object o) throws Exception;
     

@@ -1,5 +1,9 @@
 package persistence.entities;
 
+import java.util.List;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+
 /**
  *
  * @author Fabrício Ronchi
@@ -41,5 +45,28 @@ public class RoleDAO extends GenericDAO {
     public Object getNewInstance() {
         return new Role();
     }   
+        
+    protected String getNamedQueryToFindUser() {
+        return "ROLES.find.user";
+    }
+        
+    public List<Relacionamento> findUser(Role role) throws Exception {
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            Query q = session.getNamedQuery(getNamedQueryToFindUser());
+            q.setString("role", Integer.toString(role.getId()));
+            List lst = q.list();
+            session.getTransaction().commit();
+            return lst;
+        } catch (HibernateException e) {
+            throw new Exception(e.getCause().getMessage());
+        } finally {
+            releaseSession(session);
+        }
+        
+    }
+    
+    
     
 }

@@ -35,7 +35,11 @@ public class RelacionamentoDAO extends GenericDAO {
     @Override
     protected String getNamedQueryToFindByRange() {
         return "Relacionamento.find.range";
-    }     
+    } 
+    
+    protected String removeRole() {
+        return "Relacionamento.find.range";
+    } 
 
     @Override
     public Object getNewInstance() {

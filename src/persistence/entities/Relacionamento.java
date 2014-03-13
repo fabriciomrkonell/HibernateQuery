@@ -21,13 +21,15 @@ import javax.persistence.Table;
     @NamedQuery(name = "Relacionamento.id.equals", query = "SELECT o FROM Relacionamento o WHERE o.regra=:Regra"),
     @NamedQuery(name = "Relacionamento.name.equals", query = "SELECT o FROM Relacionamento o WHERE o.regra=:Regra"),
     @NamedQuery(name = "Relacionamento.find.all", query = "SELECT o FROM Relacionamento o"),
-    @NamedQuery(name = "Relacionamento.count.all", query = "SELECT COUNT(o.Regra) FROM Relacionamento o"),
+    @NamedQuery(name = "Relacionamento.count.all", query = "SELECT COUNT(o.regra) FROM Relacionamento o"),
     @NamedQuery(name = "Relacionamento.remove.all", query = "DELETE FROM Relacionamento o"),
     @NamedQuery(name = "Relacionamento.find.range", query = "SELECT o FROM Relacionamento o WHERE o.regra BETWEEN :minId AND :maxId")
 })
 public class Relacionamento implements Serializable {    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "Id")    
+    private int id;
     @Column(name = "Regra")    
     private int regra;
     @Column(name = "User")
@@ -35,6 +37,14 @@ public class Relacionamento implements Serializable {
 
     public Relacionamento() {
         setRegra(0);
+    }
+    
+     public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
     
     public int getRegra() {

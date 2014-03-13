@@ -1,4 +1,8 @@
 import java.util.ArrayList;
+import java.util.List;
+import org.hibernate.tool.hbm2x.DAOExporter;
+import persistence.entities.Relacionamento;
+import persistence.entities.RelacionamentoDAO;
 import persistence.entities.Role;
 import persistence.entities.RoleDAO;
 import persistence.entities.User;
@@ -12,9 +16,13 @@ public class TestarPersistence {
             //showAllUser();
             //createRoles();
             //showAllRoles();                        
-            adicionarRole(1, 2);               
+            //adicionarRole(); 
+            //buscarRole();
+            //removeRole();
+            //temRole();
+            buscarUser();            
         } catch (Exception ex) {
-            System.out.println("Ocorreu algum erro: " + ex.getMessage());
+            System.out.println("Ocorreu algum erro: " + ex);
         }
         
     }
@@ -91,12 +99,74 @@ public class TestarPersistence {
         
     }
      
-     private static void adicionarRole(int user, int role) throws Exception {
+     private static void adicionarRole() throws Exception {
         System.out.println("Adicionando Regras"); 
         UserDAO daou = new UserDAO();
         RoleDAO daor = new RoleDAO();
-        User userObj = (User) daou.findById(user); 
-        Role roleObj = (Role) daor.findById(role); 
-        userObj.addRole(roleObj);        
-    }    
+        User userObj = (User) daou.findById(1); 
+        Role roleObj = (Role) daor.findById(2);                             
+        RelacionamentoDAO dao = new RelacionamentoDAO();
+        Relacionamento admin = (Relacionamento) dao.getNewInstance();        
+        admin.setRegra(roleObj.getId()); 
+        admin.setUser(1); 
+        dao.create(admin);
+              
+    }  
+     
+     private static void buscarRole() throws Exception {                
+        RoleDAO roled = new RoleDAO();
+        UserDAO userd = new UserDAO();
+        Role role = (Role) roled.findById(2);  
+        System.err.println(role.getName());
+        List<Relacionamento> r = roled.findUser(role);           
+        Relacionamento o;
+        User user = new User();
+        System.out.println("Usuários da Regra " + role.getName()+ ": ");
+        for (int i = 0; i < r.size(); i++) {              
+            o = (Relacionamento) r.get(i);            
+            user = (User) userd.findById(o.getRegra());
+            System.out.println(i +" - " + user.getName());                        
+        }
+        
+    } 
+     
+     private static void removeRole() throws Exception {                        
+        UserDAO userd = new UserDAO();
+        RoleDAO roled = new RoleDAO();
+        Role role = (Role) roled.findById(2); 
+        User user = (User) userd.findById(2);         
+        userd.removeRole(user, role);
+        
+    } 
+     
+     private static void temRole() throws Exception {                        
+        UserDAO userd = new UserDAO();
+        RoleDAO roled = new RoleDAO();
+        Role role = (Role) roled.findById(2); 
+        User user = (User) userd.findById(2);         
+        boolean rel = userd.hasRole(role, user);   
+        if(rel == true){
+            System.err.println("Tem uma regra pra esse Usuário!");
+        }else{
+            System.err.println("Não existe uma regra pra esse Usuário!");
+        }
+        
+    } 
+     
+     private static void buscarUser() throws Exception {                
+        RoleDAO roled = new RoleDAO();
+        UserDAO userd = new UserDAO();
+        User user = (User) userd.findById(2);                   
+        List<Relacionamento> r = userd.findRoles(user);           
+        Relacionamento o;        
+        Role role; 
+        System.out.println("Regras do Usuário " + user.getName()+ ": ");
+        for (int i = 0; i < r.size(); i++) {                          
+            o = (Relacionamento) r.get(i);            
+            System.err.println(o);
+            role = (Role) roled.findById(o.getRegra());
+            System.out.println(i +" - " + role.getName());                        
+        }
+        
+    } 
 }

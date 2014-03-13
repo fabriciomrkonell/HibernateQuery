@@ -1,6 +1,7 @@
 package persistence.entities;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,7 +24,8 @@ import javax.persistence.Table;
     @NamedQuery(name = "ROLES.find.all", query = "SELECT o FROM Role o"),
     @NamedQuery(name = "ROLES.count.all", query = "SELECT COUNT(o.id) FROM Role o"),
     @NamedQuery(name = "ROLES.remove.all", query = "DELETE FROM Role o"),
-    @NamedQuery(name = "ROLES.find.range", query = "SELECT o FROM Role o WHERE o.id BETWEEN :minId AND :maxId")
+    @NamedQuery(name = "ROLES.find.range", query = "SELECT o FROM Role o WHERE o.id BETWEEN :minId AND :maxId"),
+    @NamedQuery(name = "ROLES.find.user", query = "SELECT o FROM Relacionamento o WHERE o.regra=:role")        
 })
 public class Role implements Serializable {    
     @Id
@@ -51,7 +53,7 @@ public class Role implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
+    }        
       
     @Override
     public String toString() {

@@ -23,7 +23,13 @@ import javax.persistence.Table;
     @NamedQuery(name = "user.find.all", query = "SELECT o FROM User o"),
     @NamedQuery(name = "user.count.all", query = "SELECT COUNT(o.id) FROM User o"),
     @NamedQuery(name = "user.remove.all", query = "DELETE FROM User o"),
-    @NamedQuery(name = "user.find.range", query = "SELECT o FROM User o WHERE o.id BETWEEN :minId AND :maxId")
+    @NamedQuery(name = "user.find.range", query = "SELECT o FROM User o WHERE o.id BETWEEN :minId AND :maxId"),
+    @NamedQuery(name = "user.remove.role", query = "DELETE FROM Relacionamento o WHERE o.id=:role"),
+    @NamedQuery(name = "user.has.temrole", query = "SELECT o FROM Relacionamento o WHERE o.regra=:role and o.user=:user"),
+    @NamedQuery(name = "ROLES.find.rolesUser", query = "SELECT o FROM Relacionamento o WHERE o.user=:user")        
+        
+        
+        
 })
 
 public class User implements Serializable {    
@@ -52,26 +58,7 @@ public class User implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-    
-    public void addRole(Role role) throws Exception {   
-        System.out.println("Criando usuários...");
-        RelacionamentoDAO dao = new RelacionamentoDAO();
-        Relacionamento admin = (Relacionamento) dao.getNewInstance();
-        admin.setRegra(role.getId()); 
-        admin.setUser(1); 
-        dao.create(admin);
-
-        System.out.print(" OK!");
-       /* RelacionamentoDAO dao = new RelacionamentoDAO();         
-        Relacionamento rel = (Relacionamento) dao.getNewInstance();
-        rel.setRegra(role.getId());
-        rel.setUser(this.getId());
-        System.out.println(rel.getRegra());
-        System.out.println(rel.getUser());
-        dao.create(rel);        
-        System.out.print(" OK!");       */
-    }        
+    }    
 
     @Override
     public String toString() {
